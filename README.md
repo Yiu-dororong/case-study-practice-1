@@ -51,6 +51,9 @@ Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitne
 #### Insepction 
 The dataset contains two sets of data, including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
 
+### Process
+For this analysis, I choose to use RStudio as it is a all-in-one tool, SQL is also a good option, considering the amount of data, but I will try it on my next practice.
+
 ```
 install.packages('ggfortify')
 ```
