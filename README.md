@@ -28,7 +28,15 @@ make healthy decisions. The Bellabeat app connects to their line of smart wellne
 
 
 ## Roadmap
-The data analysis process will be divided into six stages, ask, prepare, process, analyze, share, and act, which will be proceeded accordingly.
+The data analysis process will be divided into six stages, 
+* ask 
+* prepare 
+* process 
+* analyze 
+* share
+* act
+
+which will be proceeded accordingly.
 
 ### Ask
 The initial objective presented to me is pretty vague, let make the goal clearer and define the business task.
@@ -38,7 +46,10 @@ Therefore, the business task is likely to be "Identify trends in smart device fr
 The stakesholders will mainly be the cofounders, and the marketing analytics team. 
 
 ### Prepare
-Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit)
+Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from zenodo.org, and uploaded by a team RTI International researchers, and it is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed, whiile the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made.
+
+#### Insepction 
+The dataset contains two sets of data, including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
 
 ```
 install.packages('ggfortify')
