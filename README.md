@@ -33,4 +33,13 @@ The data analysis process will be divided into six stages, ask, prepare, process
 ### Ask
 The initial objective presented to me is pretty vague, let make the goal clearer and define the business task.
 After communication, Sršen asks you to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
-Therefore, the business task is likely to be "analyse if there are correlation between non-Bellabeat smart devices habits and company's product sales promotion".
+Therefore, the business task is likely to be "Identify trends in smart device from non-Bellabeat smart devices, and then compare the one from Bellabeat smart devices to see if any adjustment to current marketing strategy".
+(For example, if a significant growing trend on smart watch is observed and the company has not developed into smart watch, the compaany may consider invest more on smart watch.)
+The stakesholders will mainly be the cofounders, and the marketing analytics team. 
+
+### Prepare
+Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit)
+
+```
+install.packages('ggfortify')
+```
