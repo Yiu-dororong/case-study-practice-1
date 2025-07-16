@@ -67,7 +67,7 @@ minuteSleep<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteSlee
 minuteStepsNarrow<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteStepsNarrow_merged.csv")
 weightLogInfo<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/weightLogInfo_merged.csv")
 ```
-Now, I will briefly look into each data frames, by using str, head, summary functions, but before that, make sure the tidyverse packages is applied.
+Now, I will briefly look into each data frames, by using ```str```, ```head```, ```summary``` functions, but before that, make sure the ```tidyverse``` packages is applied.
 ```
 library(tidyverse)
 head()
@@ -130,7 +130,23 @@ Considering there are many spreadsheets, it would be great to merge them togethe
  $ SedentaryMinutes        : int  804 588 605 1080 763 1174 820 866 636 655 ...
  $ Calories                : int  1819 2154 1944 1932 1886 1820 1889 1868 1843 1850 ...
 ```
-Some information, such ```TotalSteps``` and ```Calories``` are already included, so the corresponding sheets, hourlySteps and hourlyCalories, can be omitted.
+Some information, such ```TotalSteps``` and ```Calories``` are already included, so the corresponding sheets, hourlySteps and hourlyCalories, can be omitted unless more details are needed.
 The only extra information are intensity, heartrate, METs, sleeping time and weight log.
 However, after some research, Fitbit use heartrate and METs to create some high level data, such as intensity and classification of active minutes. 
 I will come back to these data if needed.
+
+Now, lets organise the sheets about sleeping time and weight log.
+For the sleeping time one, since it is in a long format that check whether the user is sleeping in every minute, so I run this code to find more metadata
+
+```
+## calculate each duration of sleeping session by logId
+minuteSleep %>% 
+   mutate(minuteSleep, NewDate = mdy_hms(date)) %>%
+   group_by(Id,logId) %>% 
+   summarise(sleep_sec = max(NewDate) - min(NewDate)) %>%
+## below is to find average time per sleeping session
+   group_by(Id) %>% 
+   summarise(mean_sleep_sec = mean(sleep_sec))
+```
+
+It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for Id 2022484408 and 7007744171, their mean sleeping time is below 3 hours, which does not make sense. I shall discard them when I have to use this data.
