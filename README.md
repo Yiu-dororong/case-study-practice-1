@@ -74,7 +74,7 @@ head()
 str()
 summary()
 ```
-I discovered some formatting problem in the dataset,
+I discovered some formatting problems in the dataset,
 ```
 > str(weightLogInfo)
 'data.frame':	33 obs. of  8 variables:
@@ -87,7 +87,7 @@ I discovered some formatting problem in the dataset,
  $ IsManualReport: chr  "True" "False" "True" "True" ...
  $ LogId         : num  1.46e+12 1.46e+12 1.46e+12 1.46e+12 1.46e+12 ...
 ```
-the data type of Date is recorded as character, but not date; whereas IsManualReport column has the same problem, the date type being character rather than logical.
+the data type of ```Date``` is recorded as character, but not date; whereas ```IsManualReport``` column has the same problem, the date type being character rather than logical.
 To fix this, the following can be applied,
 ```
 weightLogInfo %>% 
