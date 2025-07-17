@@ -168,9 +168,8 @@ BMIInfo <-
 
 Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not 30 respondants' data are collected, and, to be clear, in the dailyActivity sheet, there are 35 people. 
 
-Now, let's move on to the dailyActivity sheet. I would like to address that,
-TotalSteps is positively variated with TotalDistance,
-while TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance + ModeratelyActiveDistance + LightActiveDistance + SedentaryActiveDistance
+Now, let's move on to the dailyActivity sheet. I would like to address that, by definition,
+TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance + ModeratelyActiveDistance + LightActiveDistance + SedentaryActiveDistance
 VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind.
 
 ```
@@ -179,4 +178,18 @@ dailyActivity %>%
   select(TotalRecordedMinutes)
 ```
 
-Another ```summary()``` and ```str()``` commands are run to verify there are no problems before further process.
+
+
+Another run of  ```summary()``` and ```str()``` commands is executed to verify there are no problems before further process.
+
+
+By a simple plot, we can observe that TotalSteps is positively variated with TotalDistance.
+```
+ggplot(data = dailyActivity) +
+geom_point(mapping = aes(x=TotalSteps, y=TotalDistance))
+```
+
+
+
+
+
