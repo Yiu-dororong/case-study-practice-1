@@ -170,7 +170,7 @@ Note that by running the ```distinct()``` command, it is found that there are on
 
 Now, let's move on to the dailyActivity sheet. I would like to address that, by definition,
 TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance + ModeratelyActiveDistance + LightActiveDistance + SedentaryActiveDistance
-VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind.
+VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind that this may not be a good indicator.
 
 ```
 dailyActivity %>% 
