@@ -46,7 +46,7 @@ Therefore, the business task is likely to be "Identify trends in smart device fr
 The stakesholders will mainly be the cofounders, and the marketing analytics team. 
 
 ### Prepare
-Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from zenodo.org, and uploaded by a team RTI International researchers, and it is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed, while the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made.
+Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from zenodo.org, and uploaded by a team RTI International researchers, and it is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed, while the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made. More details on data format can be found in [here](https://support.mydatahelps.org/hc/en-us/sections/360008888093-Fitbit-Data-Exports).
 
 #### Insepction 
 The dataset contains two sets of data, including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
@@ -149,4 +149,21 @@ minuteSleep %>%
    summarise(mean_sleep_sec = mean(sleep_sec))
 ```
 
-It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for Id 2022484408 and 7007744171, their mean sleeping time is below 3 hours, which does not make sense. I shall discard them when I have to use this data.
+It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, which does not make sense. I shall discard them when I have to use this data.
+
+On the weightLogInfo table, there are serveral duplicates for some people. They have multiple measurement across the period of time. I will pick the most recent as reference, if needed. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
+
+```
+## store in a new data frame
+BMIInfo <-
+  weightLogInfo %>%
+## change of format in advance
+  mutate(weightLogInfo,NewDate = mdy_hms(Date)) %>%
+  mutate(weightLogInfo,IsManualReport_logical = as.logical(IsManualReport)) %>%
+## choose the lastest entry for each iD
+  group_by(Id) %>%
+  filter(NewDate == max(NewDate))
+## optional: can add a line of select() to select the desired columns 
+```
+
+
