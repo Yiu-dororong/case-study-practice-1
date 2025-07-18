@@ -331,6 +331,8 @@ Dataset has limited data. More extensive datasets can be used, such as a longer 
 Let's further relate these insight to what can be done.
 
 (1) Design a better device that is more user-friendly that will yield higher usage time, and so provide more accurate evaluation to users
+
 (2) Develop notification system as there are some cases that having high idling time to avoid miscalculation. A further step can be send reminder to user to enourage health management.
+
 (3) Extend wider metrics to measure healthiness. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. 
 
