@@ -139,11 +139,12 @@ Now, lets organise the sheets about sleeping time and weight log.
 For the sleeping time one, since it is in a long format that check whether the user is sleeping in every minute, so I run this code to find more metadata
 
 ```
-## calculate each duration of sleeping session by logId
-minuteSleep %>% 
-   mutate(minuteSleep, NewDate = mdy_hms(date)) %>%
-   group_by(Id,logId) %>% 
-   summarise(sleep_sec = max(NewDate) - min(NewDate)) %>%
+## calculate each duration of sleeping session and date of sleep by logId
+SleepSessionTime <-
+  minuteSleep %>% 
+  mutate(minuteSleep, NewDate = mdy_hms(date)) %>%
+  group_by(Id,logId) %>% 
+  summarise(sleep_sec = max(NewDate) - min(NewDate), sleep_date = min(NewDate)) 
 ## below is to find average time per sleeping session
    group_by(Id) %>% 
    summarise(mean_sleep_sec = mean(sleep_sec))
@@ -173,9 +174,9 @@ TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance 
 VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind that this may not be a good indicator.
 
 ```
-dailyActivity %>% 
-  mutate(dailyActivity,TotalRecordedMinutes = VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes) %>% 
-  select(TotalRecordedMinutes)
+dailyActivity <- dailyActivity %>% 
+  mutate(dailyActivity,TotalRecordedMinutes = VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes) %>%
+  mutate(dailyActivity,Date = mdy(ActivityDate))
 ```
 
 
@@ -189,7 +190,147 @@ ggplot(data = dailyActivity) +
 geom_point(mapping = aes(x=TotalSteps, y=TotalDistance))
 ```
 
+And by a pie chart, we see that higher intensity does not mean making up fewer proportion.
+```
+library('scales')
+  
+distance_intensity <- data_frame(
+distance_intensity_type = c("LightActive", "ModeratelyActive", "VeryActive"),
+all_respondants_distance_by_intensity = c(sum(MasterList$TotalLightActiveDistance), sum(MasterList$TotalModeratelyActiveDistance), sum(MasterList$TotalVeryActiveDistance)),
+intensity_percent = round((all_respondants_distance_by_intensity / sum(all_respondants_distance_by_intensity))*100,1),
+)
 
+distance_intensity <- distance_intensity %>% 
+  arrange(desc(distance_intensity_type)) %>%
+  mutate(prop = all_respondants_distance_by_intensity / sum(distance_intensity$all_respondants_distance_by_intensity) ) %>%
+  mutate(ypos = (cumsum(prop)- 0.5*prop)) 
 
+ggplot(distance_intensity, aes(x="", y=prop, fill=distance_intensity_type )) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() +
+  labs(title="Proportion of different intensity of distance \n among all respondants")+
+  theme(legend.position="none",plot.title = element_text(hjust = 0.5, size = 20))+
+  geom_text(aes(y = ypos, label = distance_intensity_type), color = "white", size=5) +
+  geom_text(aes(x=1.6,y = ypos, label = percent(intensity_percent,scale = 1,suffix = "%") ), color = "black", size=5) 
+  scale_fill_brewer(palette="Set1")
+```
+In terms of total distance, it is composed by 64% of light active, 10% of moderately active, and 26% of very active. This may imply there are two extremes, very people choose to have a moderately active activity.
 
+I further investigate the relationship between number of steps and calories, it is found that they are positively related, but at a mimimal correlation.
+```
+#relationship between steps and calories
+ggplot(data = MasterList,aes(x=NewTotalDistance, y=TotalCalories)) +
+  geom_point()+
+  geom_smooth(method="loess")+
+  labs(title="TotalSteps vs TotalCalories")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+ Next, I moved on to find if there is any relationship between BMI and daily distance. Since they are data from two different sheets, I have to merge them first. I also classify respondants' healthiness based on BMI, depsite being considered as a outdated and inaccurate measure. Yet, no clear correlation is found. 
+ ```
+  MasterList <- left_join(MasterList,BMIInfo)  
+    BMIpos <- c(14,22,27,35)
+    BMIcategory <- c("Underweight","Normal","Overweight","Obese")
+    MidDist <-max((MasterList$AvgSteps)-min(MasterList$AvgSteps)) /2
+    
+  ggplot(data = MasterList) +
+    geom_point(mapping = aes(x=AvgSteps, y=BMI))+
+    labs(title="Average Steps vs BMI")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    ylim(10,50)+
+    geom_hline(aes(yintercept = 18.5))+
+    geom_hline(aes(yintercept = 25))+
+    geom_hline(aes(yintercept = 30))+
+    annotate('text', x=MidDist, y=BMIpos, label=BMIcategory, size=4)
+  ```
+
+Furthermore, I tried to investigate the correlation sleep time and number of steps.
+```
+  SleepInfo<-
+  SleepSessionTime %>% 
+    mutate(sleep_day = date(sleep_date)) %>% 
+    group_by(Id) %>% 
+    summarise(daily_sleep_time = sum(sleep_sec)/n_distinct(sleep_day))
+  
+  SleepInfo <- SleepInfo[!(SleepInfo$Id %in% c(1644430081,1844505072,2022484408,7007744171)),]
+
+  MasterList <- left_join(MasterList, SleepInfo)
+
+  ggplot(data = MasterList,aes(x=AvgSteps, y=daily_sleep_time/3600)) +
+    geom_point()+
+    labs(title="Daily Steps vs Daily Sleeping Time")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    xlab("Daily Steps")+
+    ylab("Daily Sleeping Time (hour)")+
+    geom_smooth(method='lm',se = FALSE)
+  ```
+Due to the limited data points, the trend is not apparent. However, one can observed that when daily steps increase, the daily sleeping time also increases in general.
+
+Last but not least, we would also like to find out the trend of the device usage.
+
+There is no clear trend against the day of usage.
+```
+dailyActivity %>% 
+  mutate(dailyActivity,Day = wday(Date, label = TRUE)) %>% 
+  group_by(Day) %>% 
+  summarise(median_usage = median(TotalRecordedMinutes), mean_usage = mean(TotalRecordedMinutes))
+```
+Other schema cannot be used, as this may cause an observer bias. For example, one does not want wear the watch during sports, the time of device usage and active minutes will both decrease, so it is inaccurate to make correlation between them.
+
+```
+ggplot(data = dailyActivity, aes(TotalRecordedMinutes))+ 
+  stat_ecdf(geom = "step")+
+  xlim(0,1440)+
+  labs(title = "Cumulative Relative Frequency of Daily Usage")+
+  xlab("Cumulative Relative Frequency")+
+  ylab("Daily Usage")
+```
+This plot gives a overview how frequent the device is used. It revealed that only a half of the recorded usage showed that the respondant wears it whole day (24hours). Around one-fourth of the them wear less than 16 hours. It is uncertain whether this is due to "they do not wear them at sleep".
+```
+dailyActivity <- dailyActivity %>% 
+  mutate(SedProp =SedentaryMinutes/TotalRecordedMinutes)
+```
+This calculated the propation of sedentary minutes over total recorded minutes. I am interest how is the actual usage from the view of activeness.
+
+```
+ggplot(data = dailyActivity)+
+  geom_point(mapping = aes(x=TotalRecordedMinutes, y=SedProp))+
+  labs(title="Total Usage vs Sedentary Proportion")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  xlim(0,1440)+
+  annotate("rect",xmin = 750,xmax = 1440,ymin = 0.5,ymax = 1.0,alpha = 0.2)+
+  annotate('text', x=100, y=0.92, label=0.9, size=4)+
+  geom_hline(yintercept = 0.9)+
+  xlab("Total Usage")+
+  ylab("Sedentary Proportion")
+```
+This plot tries to correlate the sedentary proportion of the usage. One can tell from the graph,
+(1) Most people are in the first quadrant (usage more than 12 hours, sedentary proportion greater than 0.5)
+(2) A clear stack of points on x=1440, which means wear it full day
+(3) A few points is above the line y=0.9, meaning some highly inactive usage are recorded. Especially some records are having 100% sedentary proportion, this may imply the respondant is totally idle or suffer from illness. It is very likely to be not wearing it and leaving it on.
+
+### Share
+As some of the findings and insight already mentioned above, I will make a conclusion here.
+
+(1) Usage
+Some cases of complete idle, or highly inactive usage are found. 
+Not everyone wears it whole day, only a half of them wear them frequently.
+Even fewer people wear it during sleeping
+
+(2) Health
+BMI is a outdated measurement, and should be avoid.
+Very little correlation was found
+More steps give more distances and also more calories
+Intensity of distance: Moderately Active (10%) < Very Active (26%) < Light Active (64%), which is unexpected to see the most active category being second place
+
+(3) Limitation
+Dataset has limited data. More extensive datasets can be used, such as a longer period or accross different products.
+
+### Act
+Let's further relate these insight to what can be done.
+
+(1) Design a better device that is more user-friendly that will yield higher usage time, and so provide more accurate evaluation to users
+(2) Develop notification system as there are some cases that having high idling time to avoid miscalculation. A further step can be send reminder to user to enourage health management.
+(3) Extend wider metrics to measure healthiness. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. 
 
