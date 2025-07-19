@@ -2,7 +2,7 @@
 This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and with some guidances from the course I am taking, and also mainly focuses on the skills on R during the analysis process. It aims to show all the procedure and thought process here. If you looks for a completion of work, say, as a presentation or summary, I highly recommend to view another files instead.
 
 ## Introduction
-Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to produce high-level recommendations for marketing strategy of one of their products. 
+Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to produce high-level recommendations for marketing strategy to one of their products. 
 
 ## Background
 *Some of the key information are excerpt from the guidance given by the course.*
@@ -35,14 +35,15 @@ which will be proceeded accordingly.
 ### Ask
 The initial objective presented to me is pretty vague, let make the goal clearer and define the business task.
 
-After communication, I was asked to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
+Recall that I was asked to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
+
 Therefore, the business task is likely to be "Identify trends in smart device usage from non-Bellabeat smart devices, and look for any discoveies that can help improve the current marketing strategy of *Time*".
 
 ### Prepare
 Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from [zenodo.org](https://zenodo.org/records/53894#.YMoUpnVKiP9), and uploaded by a team RTI International researchers, and RTI International is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed. Meanwhile, the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made. More details on data format can be found in [here](https://support.mydatahelps.org/hc/en-us/sections/360008888093-Fitbit-Data-Exports).
 
 #### Insepction 
-The dataset contains two sets of data, including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
+The dataset contains including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
 
 ### Process
 For this analysis, I choose to use RStudio as it is a all-in-one tool, SQL is also a good option, considering the amount of data, but I will try it on my next practice.
@@ -60,7 +61,7 @@ minuteSleep<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteSlee
 minuteStepsNarrow<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteStepsNarrow_merged.csv")
 weightLogInfo<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/weightLogInfo_merged.csv")
 ```
-Now, I will briefly look into each data frames, by using ```str```, ```head```, ```summary``` functions, but before that, make sure the ```tidyverse``` packages are all loaded in.
+Now, I will briefly look into each data frames, by using ```str```, ```head```, ```summary``` functions, but before that, make sure the ```tidyverse``` packages are ready.
 ```
 library(tidyverse)
 head()
@@ -86,10 +87,10 @@ To fix this, the following can be applied,
 weightLogInfo %>% 
   mutate(weightLogInfo,NewDate = mdy_hms(Date)) %>%
   mutate(weightLogInfo,IsManualReport_logical = as.logical(IsManualReport)) %>%
-  str()
 ```
 and the data types will be adjusted in new columns.
 ```
+> str(weightLogInfo)
 'data.frame':	33 obs. of  10 variables:
  $ Id                    : num  1.50e+09 1.93e+09 2.35e+09 2.87e+09 2.87e+09 ...
  $ Date                  : chr  "4/5/2016 11:59:59 PM" "4/10/2016 6:33:26 PM" "4/3/2016 11:59:59 PM" "4/6/2016 11:59:59 PM" ...
@@ -103,7 +104,7 @@ and the data types will be adjusted in new columns.
  $ IsManualReport_logical: logi  TRUE FALSE TRUE TRUE TRUE TRUE ...
 ```
 
-Considering there are many spreadsheets, it would be great to merge them together. Let's treat dailyActivity as the major sheet, and review what columns there are.
+Considering there are so many spreadsheets, it would be great to merge them together. Let's treat dailyActivity as the main sheet, and review what columns there are.
 ```
 > str(dailyActivity)
 'data.frame':	457 obs. of  15 variables:
@@ -143,7 +144,7 @@ SleepSessionTime <-
    summarise(mean_sleep_sec = mean(sleep_sec))
 ```
 
-It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, the same goes for 1644430081 and 1844505072, having a exceptional high sleeping hours, which does not seem to accurate measurement. I shall discard them when I have to use this data.
+It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, the same goes for 1644430081 and 1844505072, having exceptional high sleeping hours, which does not seem to accurate measurement. I shall discard them when I have to use this data.
 
 On the ```weightLogInfo``` table, there are serveral duplicates for some people, because they have multiple measurement across the period of time. I will pick the most recent as reference. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
 
@@ -160,11 +161,13 @@ BMIInfo <-
 ## Optional: can add a line of select() to select the desired columns 
 ```
 
-Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not all respondants' data are collected, and, to be clear, in the ```dailyActivity``` sheet, there are 35 people. 
+Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not all respondants' data are collected, and, to be clear, in the ```dailyActivity``` sheet, there are 35 people. This tells us the sample size is 35 instead of 30.
 
 Now, let's move on to the ```dailyActivity``` sheet. I would like to address that, by definition,
+
 TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance + ModeratelyActiveDistance + LightActiveDistance + SedentaryActiveDistance
-VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind that this may not be a good indicator. On the other hand, this is good metric to view their daily usage.
+
+VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but after the following code clearly reveals that some entries do not, so I shall keep this in mind that this may not be a good indicator. Yet, on the other hand, this is a good metric to view their daily usage.
 
 ```
 ## Insert new columns for total recorded minutes per day.
@@ -187,8 +190,10 @@ geom_point(mapping = aes(x=TotalSteps, y=TotalDistance))
 
 And by a pie chart, we see that higher intensity does not mean making up fewer proportion.
 ```
+## Need to use one of the function in scales
 library('scales')
-  
+
+## Preparation for graphing
 distance_intensity <- data_frame(
 distance_intensity_type = c("LightActive", "ModeratelyActive", "VeryActive"),
 all_respondants_distance_by_intensity = c(sum(MasterList$TotalLightActiveDistance), sum(MasterList$TotalModeratelyActiveDistance), sum(MasterList$TotalVeryActiveDistance)),
@@ -200,6 +205,7 @@ distance_intensity <- distance_intensity %>%
   mutate(prop = all_respondants_distance_by_intensity / sum(distance_intensity$all_respondants_distance_by_intensity) ) %>%
   mutate(ypos = (cumsum(prop)- 0.5*prop)) 
 
+## Pie Chart of proportion among different intersity
 ggplot(distance_intensity, aes(x="", y=prop, fill=distance_intensity_type )) +
   geom_bar(stat="identity", width=1) +
   coord_polar("y", start=0) +
@@ -212,7 +218,7 @@ ggplot(distance_intensity, aes(x="", y=prop, fill=distance_intensity_type )) +
 ```
 <img width="661" height="687" alt="pie chart" src="https://github.com/user-attachments/assets/9b9ad5fe-1049-4817-b5ca-a091ed5205e9" />
 
-In terms of total distance, it is composed by 64% of light active, 10% of moderately active, and 26% of very active. This may imply there are two extremes, very people choose to have a moderately active activity.
+In terms of total distance, it is composed by 64% of light active, 10% of moderately active, and 26% of very active. This may imply there are two extremes, very few people choose to have a moderately active activity.
 
 I further investigate the relationship between number of steps and calories, it is found that they are positively related, but at a mimimal correlation.
 ```
@@ -315,7 +321,7 @@ ggplot(data = dailyActivity, aes(TotalRecordedMinutes))+
 
 <img width="661" height="687" alt="cum fr" src="https://github.com/user-attachments/assets/8485cb03-454c-4eaf-95a7-7e98e5f51b3d" />
 
-This plot gives a overview how frequent the device is used. It revealed that only a half of the recorded usage showed that the respondant wears it whole day (24hours). Around one-fourth of the them wear less than 16 hours. It is uncertain whether this is due to "they do not wear them at sleep".
+This plot gives a overview how frequent the device is used. It revealed that only a half of the recorded usage showed that the respondant wears it whole day (24 hours). Around one-fourth of the them wear less than 16 hours. It is uncertain whether this is due to "they do not wear them at sleep".
 ```
 dailyActivity <- dailyActivity %>% 
   mutate(SedProp =SedentaryMinutes/TotalRecordedMinutes)
@@ -378,5 +384,5 @@ Let's further relate these insight to what can be done.
 
 (2) Develop notification system or any kind of interactions as there are some cases that having high idling time to avoid miscalculation. This can improve users' engagement to their smart devices. A further step can be send reminder to user to enourage health management.
 
-(3) Extend wider metrics to measure healthiness. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. Based on these outcomes from Fitbit, we shall actively check for better measurement for healthiness to our customers, making sure they have the most accurate understanding on their health.
+(3) Extend wider metrics to measure healthiness and activity. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. Based on these outcomes from Fitbit, we shall actively check for better measurement for healthiness to our customers, making sure they have the most accurate understanding on their health.
 
