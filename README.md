@@ -1,5 +1,5 @@
 # case-study-practice-1
-This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and guided by the pdf given from the course I am taking, and also mainly focuses on the skills on R during the analysis process.
+This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and with some guidances from the course I am taking, and also mainly focuses on the skills on R during the analysis process. It aims to show all the procedure and thought process here. If you looks for a completion of work, say, for presentation or summary, I highly recommend to view another files instead.
 
 ## Introduction
 Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to develop marketing strategy of one of their products. This should be reported to the Bellabeat executive team.
