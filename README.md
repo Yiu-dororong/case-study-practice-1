@@ -1,4 +1,4 @@
-<img width="661" height="687" alt="steps vs bmi" src="https://github.com/user-attachments/assets/abfdf17b-b4da-46e6-86b3-3faccd6e1df7" /># Case Study Practice 1 (ft. R) 
+# Case Study Practice 1 (ft. R) 
 This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and with some guidances from the course I am taking, and also mainly focuses on the skills on R during the analysis process. It aims to show all the procedure and thought process here. If you looks for a completion of work, say, for presentation or summary, I highly recommend to view another files instead.
 
 ## Introduction
