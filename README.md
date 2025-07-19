@@ -13,7 +13,7 @@ There are several products that are available for choice, which are Bellabeat ap
 * Leaf: Bellabeat’s classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
 * Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
 
-and I believe Time is the closest match, and so *Time* would be my choice.
+and I believe *Time* is the closest match, and so *Time* would be my choice.
 
 ### Stakeholders
 * Urška Sršen: Bellabeat’s cofounder and Chief Creative Officer
@@ -39,7 +39,7 @@ After communication, I was asked to analyze smart device usage data in order to 
 Therefore, the business task is likely to be "Identify trends in smart device usage from non-Bellabeat smart devices, and look for any discoveies that can help improve the current marketing strategy of *Time*".
 
 ### Prepare
-Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from zenodo.org, and uploaded by a team RTI International researchers, and it is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed, while the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made. More details on data format can be found in [here](https://support.mydatahelps.org/hc/en-us/sections/360008888093-Fitbit-Data-Exports).
+Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from [zenodo.org](https://zenodo.org/records/53894#.YMoUpnVKiP9), and uploaded by a team RTI International researchers, and RTI International is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed. Meanwhile, the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made. More details on data format can be found in [here](https://support.mydatahelps.org/hc/en-us/sections/360008888093-Fitbit-Data-Exports).
 
 #### Insepction 
 The dataset contains two sets of data, including two one-month observations of 30 eligible Fitbit users' tracker data. They have a long format that each person may have multiple entries accross different points of time, so it requires some organisations later. Some of the information is missing too, for example, in the weightLogInfo_merged.csv, there are only 11 people's data, which is far from 30. Inside the table, some records are empty too, and these happened in other spreadsheets as well. 
@@ -60,7 +60,7 @@ minuteSleep<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteSlee
 minuteStepsNarrow<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/minuteStepsNarrow_merged.csv")
 weightLogInfo<- read.csv("D://mturkfitbit/Fitabase Data 3.12.16-4.11.16/weightLogInfo_merged.csv")
 ```
-Now, I will briefly look into each data frames, by using ```str```, ```head```, ```summary``` functions, but before that, make sure the ```tidyverse``` packages is applied.
+Now, I will briefly look into each data frames, by using ```str```, ```head```, ```summary``` functions, but before that, make sure the ```tidyverse``` packages are all loaded in.
 ```
 library(tidyverse)
 head()
@@ -103,7 +103,7 @@ and the data types will be adjusted in new columns.
  $ IsManualReport_logical: logi  TRUE FALSE TRUE TRUE TRUE TRUE ...
 ```
 
-Considering there are many spreadsheets, it would be great to merge them together. Let's take dailyActivity as the main sheet, and review what columns there are.
+Considering there are many spreadsheets, it would be great to merge them together. Let's treat dailyActivity as the major sheet, and review what columns there are.
 ```
 > str(dailyActivity)
 'data.frame':	457 obs. of  15 variables:
@@ -132,13 +132,13 @@ Now, lets organise the sheets about sleeping time and weight log.
 For the sleeping time one, since it is in a long format that check whether the user is sleeping in every minute, so I run this code to find more metadata
 
 ```
-## calculate each duration of sleeping session and date of sleep by logId
+## Calculate each duration of sleeping session and date of sleep by logId
 SleepSessionTime <-
   minuteSleep %>% 
   mutate(minuteSleep, NewDate = mdy_hms(date)) %>%
   group_by(Id,logId) %>% 
   summarise(sleep_sec = max(NewDate) - min(NewDate), sleep_date = min(NewDate)) 
-## below is to find average time per sleeping session
+## Find average time per sleeping session (optional)
    group_by(Id) %>% 
    summarise(mean_sleep_sec = mean(sleep_sec))
 ```
