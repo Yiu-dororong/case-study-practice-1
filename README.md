@@ -2,7 +2,7 @@
 This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and with some guidances from the course I am taking, and also mainly focuses on the skills on R during the analysis process. It aims to show all the procedure and thought process here. If you looks for a completion of work, say, as a presentation or summary, I highly recommend to view another files instead.
 
 ## Introduction
-Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to produce high-level recommendations for marketing strategy to one of their products. 
+Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from non-Bellabeat smart device data to produce high-level recommendations for marketing strategy to one of their products. 
 
 ## Background
 *Some of the key information are excerpt from the guidance given by the course.*
