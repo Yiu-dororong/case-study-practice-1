@@ -2,12 +2,10 @@
 This project serves as the first hand-on practice on my data analytics skills. It is based on a given topic and with some guidances from the course I am taking, and also mainly focuses on the skills on R during the analysis process. It aims to show all the procedure and thought process here. If you looks for a completion of work, say, for presentation or summary, I highly recommend to view another files instead.
 
 ## Introduction
-Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to develop marketing strategy of one of their products. This should be reported to the Bellabeat executive team.
+Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to produce high-level recommendations for marketing strategy of one of their products. 
 
 ## Background
 *The following information are from the pdf provided by the course.*
-### Company
-Sršen knows that an analysis of Bellabeat’s available consumer data would reveal more opportunities for growth. She has asked the marketing analytics team to focus on a Bellabeat product and analyze smart device usage data in order to gain insight into how people are already using their smart devices. Then, using this information, she would like high-level recommendations for how these trends can inform Bellabeat marketing strategy.
 
 ### Products 
 * Bellabeat app: The Bellabeat app provides users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and
@@ -17,7 +15,7 @@ make healthy decisions. The Bellabeat app connects to their line of smart wellne
 * Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
 * Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
 
-### Characters
+### Stakeholders
 * Urška Sršen: Bellabeat’s cofounder and Chief Creative Officer
 * Sando Mur: Mathematician and Bellabeat’s cofounder; key member of the Bellabeat executive team
 * Bellabeat marketing analytics team: A team of data analysts responsible for collecting, analyzing, and reporting data that helps guide Bellabeat’s marketing strategy. You joined this team six months ago and have been busy learning about Bellabeat’’s mission and business goals — as well as how you, as a junior data analyst, can help Bellabeat achieve them.
