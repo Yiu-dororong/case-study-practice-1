@@ -160,22 +160,23 @@ BMIInfo <-
 ## Optional: can add a line of select() to select the desired columns 
 ```
 
-Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not 30 respondants' data are collected, and, to be clear, in the dailyActivity sheet, there are 35 people. 
+Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not all respondants' data are collected, and, to be clear, in the ```dailyActivity``` sheet, there are 35 people. 
 
-Now, let's move on to the dailyActivity sheet. I would like to address that, by definition,
+Now, let's move on to the ```dailyActivity``` sheet. I would like to address that, by definition,
 TotalDistance = TrackerDistance + LoggedActivitiesDistance = VeryActiveDistance + ModeratelyActiveDistance + LightActiveDistance + SedentaryActiveDistance
-VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind that this may not be a good indicator.
+VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes should be 1440 (minutes) which equals to a whole day, but the following code clearly shows that some entries do not, so I shall keep this in mind that this may not be a good indicator. On the other hand, this is good metric to view their daily usage.
 
 ```
+## Insert new columns for total recorded minutes per day.
 dailyActivity <- dailyActivity %>% 
   mutate(dailyActivity,TotalRecordedMinutes = VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes) %>%
   mutate(dailyActivity,Date = mdy(ActivityDate))
 ```
 
-
-
 Another run of  ```summary()``` and ```str()``` commands is executed to verify there are no problems before further process.
 
+
+####Graphing
 
 By a simple plot, we can observe that TotalSteps is positively variated with TotalDistance.
 ```
