@@ -351,16 +351,21 @@ As some of the findings and insight already mentioned above, I will make a brief
 
 (1) **Usage**
 
-Some cases of complete idle, or highly inactive usage are found. 
+Some cases of being completely idle, or highly inactive are found. 
+
 Not everyone wears it whole day, only a half of them wear them frequently.
-Even fewer people wear it during sleeping
+
+Even fewer people wear it during sleeping.
 
 (2) **Health**
 
-BMI is a outdated measurement, and should be avoid.
-Very little correlation was found
-More steps give more distances and also more calories
-Intensity of distance: Moderately Active (10%) < Very Active (26%) < Light Active (64%), which is unexpected to see the most active category being second place
+BMI is a outdated measurement, and they may be a lot of factors affect it.
+
+Very little correlation was found.
+
+More steps give more distances and also more calories.
+
+Intensity of distance: Moderately Active (10%) < Very Active (26%) < Light Active (64%), which is unexpected to see the most active category being the second place.
 
 (3) **Limitation**
 
@@ -369,9 +374,9 @@ Dataset has limited data. More extensive datasets can be used, such as a longer 
 ### Act
 Let's further relate these insight to what can be done.
 
-(1) Design a better device that is more user-friendly that will yield higher usage time, and so provide more accurate evaluation to users
+(1) Design a better device that is more user-friendly that will yield higher usage time, and so provide more accurate evaluation to users. There are times that users does not wear their smartwatches, especially during sleep (since there are very little sleep records). Hence, this motivates us if there are any ways to improve user experience that make them wear longer, More information can be gathered through surveys.
 
-(2) Develop notification system as there are some cases that having high idling time to avoid miscalculation. A further step can be send reminder to user to enourage health management.
+(2) Develop notification system or any kind of interactions as there are some cases that having high idling time to avoid miscalculation. This can improve users' engagement to their smart devices. A further step can be send reminder to user to enourage health management.
 
-(3) Extend wider metrics to measure healthiness. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. 
+(3) Extend wider metrics to measure healthiness. For example, BMI is not that accurate, and the correlation between steps and calories is weak, this may imply there is still a lot of factor contribute to calories. Based on these outcomes from Fitbit, we shall actively check for better measurement for healthiness to our customers, making sure they have the most accurate understanding on their health.
 
