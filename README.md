@@ -125,8 +125,8 @@ Considering there are many spreadsheets, it would be great to merge them togethe
 ```
 Some information, such ```TotalSteps``` and ```Calories``` are already included, so the corresponding sheets, hourlySteps and hourlyCalories, can be omitted unless more details are needed.
 The only extra information are intensity, heartrate, METs, sleeping time and weight log.
-However, after some research, Fitbit use heartrate and METs to create some high level data, such as intensity and classification of active minutes. 
-I will come back to these data if needed.
+
+However, after some research, Fitbit use heartrate and METs to create some high level data, such as intensity and classification of active minutes, I will come back to these data if needed.
 
 Now, lets organise the sheets about sleeping time and weight log.
 For the sleeping time one, since it is in a long format that check whether the user is sleeping in every minute, so I run this code to find more metadata
@@ -138,26 +138,26 @@ SleepSessionTime <-
   mutate(minuteSleep, NewDate = mdy_hms(date)) %>%
   group_by(Id,logId) %>% 
   summarise(sleep_sec = max(NewDate) - min(NewDate), sleep_date = min(NewDate)) 
-## Find average time per sleeping session (optional)
+## Optional: Find average time per sleeping session
    group_by(Id) %>% 
    summarise(mean_sleep_sec = mean(sleep_sec))
 ```
 
-It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, which does not make sense. I shall discard them when I have to use this data.
+It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, the same goes for 1644430081 and 1844505072, having a exceptional high sleeping hours, which does not seem to accurate measurement. I shall discard them when I have to use this data.
 
-On the weightLogInfo table, there are serveral duplicates for some people. They have multiple measurement across the period of time. I will pick the most recent as reference, if needed. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
+On the ```weightLogInfo``` table, there are serveral duplicates for some people, because they have multiple measurement across the period of time. I will pick the most recent as reference. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
 
 ```
-## store in a new data frame
+## Store in a new data frame
 BMIInfo <-
   weightLogInfo %>%
-## change of format in advance
+## Change of format 
   mutate(weightLogInfo,NewDate = mdy_hms(Date)) %>%
   mutate(weightLogInfo,IsManualReport_logical = as.logical(IsManualReport)) %>%
-## choose the lastest entry for each iD
+## Choose the lastest entry for each iD
   group_by(Id) %>%
   filter(NewDate == max(NewDate))
-## optional: can add a line of select() to select the desired columns 
+## Optional: can add a line of select() to select the desired columns 
 ```
 
 Note that by running the ```distinct()``` command, it is found that there are only 11 people's BMI and 23 people's sleeping time, which means that not 30 respondants' data are collected, and, to be clear, in the dailyActivity sheet, there are 35 people. 
