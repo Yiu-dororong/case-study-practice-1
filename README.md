@@ -5,14 +5,15 @@ This project serves as the first hand-on practice on my data analytics skills. I
 Imagine I were a junior data analyst in Bellabeat, a high-tech manufacturer of health-focused products, and I were asked to gain insight from smart device data to produce high-level recommendations for marketing strategy of one of their products. 
 
 ## Background
-*The following information are from the pdf provided by the course.*
+*Some of the key information are excerpt from the guidance given by the course.*
 
 ### Products 
-There are several products that are available for choice, which are Bellabeat app, Leaf, Time, Spring and Bellabeat membership. As I was suggested to use Fitbit (smartwatch) to perform analysis, I am leaned to choose accessory type products, like the followings:
+There are several products that are available for choice, which are Bellabeat app, Leaf, Time, Spring and Bellabeat membership. As I was suggested to use Fitbit (smartwatch) to perform the analysis, I am leaned to choose accessory type products, like the followings:
 
-* Leaf: Bellabeat’s classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connectsto the Bellabeat app to track activity, sleep, and stress.
+* Leaf: Bellabeat’s classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
 * Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
 
+and I believe Time is the closest match, and so *Time* would be my choice.
 
 ### Stakeholders
 * Urška Sršen: Bellabeat’s cofounder and Chief Creative Officer
@@ -22,21 +23,20 @@ There are several products that are available for choice, which are Bellabeat ap
 
 ## Roadmap
 The data analysis process will be divided into six stages, 
-* ask 
-* prepare 
-* process 
-* analyze 
-* share
-* act
+* Ask 
+* Prepare 
+* Process 
+* Analyze 
+* Share
+* Act
 
 which will be proceeded accordingly.
 
 ### Ask
 The initial objective presented to me is pretty vague, let make the goal clearer and define the business task.
-After communication, Sršen asks you to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
-Therefore, the business task is likely to be "Identify trends in smart device from non-Bellabeat smart devices, and then compare the one from Bellabeat smart devices to see if any adjustment to current marketing strategy".
-(For example, if a significant growing trend on smart watch is observed and the company has not developed into smart watch, the compaany may consider invest more on smart watch.)
-The stakesholders will mainly be the cofounders, and the marketing analytics team. 
+
+After communication, I was asked to analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
+Therefore, the business task is likely to be "Identify trends in smart device usage from non-Bellabeat smart devices, and look for any discoveies that can help improve the current marketing strategy of *Time*".
 
 ### Prepare
 Informed by Sršen, I am suggested to use the dataset from Kaggle, [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit). The dataset originated from zenodo.org, and uploaded by a team RTI International researchers, and it is thought to be a reliable research organisation, so the dataset has a relatively high credibility. However, the data are gathered through distributed survey via Amazon Mechanical Turk, this may create a bias that people not using that platform cannot be observed, while the data is not current compared to the time this report is made. The dataset is downloaded and uploaded to RStudio for further process, backups are also made. More details on data format can be found in [here](https://support.mydatahelps.org/hc/en-us/sections/360008888093-Fitbit-Data-Exports).
