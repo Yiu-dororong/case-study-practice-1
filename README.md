@@ -254,7 +254,7 @@ MasterList <- left_join(MasterList,BMIInfo)
 <img width="661" height="687" alt="steps vs bmi" src="https://github.com/user-attachments/assets/7dac3ee7-c01e-45e8-9327-3eb706825805" />
 
 
-Furthermore, I tried to investigate the correlation sleep time and number of steps.
+Furthermore, I tried to investigate the correlation sleep time and number of steps. Keeping in mind that some outliers mentioned before should be remove.
 ```
   SleepInfo<-
   SleepSessionTime %>% 
@@ -339,8 +339,11 @@ ggplot(data = dailyActivity)+
 
 
 This plot tries to correlate the sedentary proportion of the usage. One can tell from the graph,
+
 (1) Most people are in the first quadrant (usage more than 12 hours, sedentary proportion greater than 0.5)
+
 (2) A clear stack of points on x=1440, which means wear it full day
+
 (3) A few points is above the line y=0.9, meaning some highly inactive usage are recorded. Especially some records are having 100% sedentary proportion, this may imply the respondant is totally idle or suffer from illness. It is very likely to be not wearing it and leaving it on.
 
 ### Share
