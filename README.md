@@ -350,17 +350,20 @@ This plot tries to correlate the sedentary proportion of the usage. One can tell
 As some of the findings and insight already mentioned above, I will make a brief conclusion here.
 
 (1) Usage
+
 Some cases of complete idle, or highly inactive usage are found. 
 Not everyone wears it whole day, only a half of them wear them frequently.
 Even fewer people wear it during sleeping
 
 (2) Health
+
 BMI is a outdated measurement, and should be avoid.
 Very little correlation was found
 More steps give more distances and also more calories
 Intensity of distance: Moderately Active (10%) < Very Active (26%) < Light Active (64%), which is unexpected to see the most active category being second place
 
 (3) Limitation
+
 Dataset has limited data. More extensive datasets can be used, such as a longer period or accross different products.
 
 ### Act
