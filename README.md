@@ -321,6 +321,7 @@ ggplot(data = dailyActivity, aes(TotalRecordedMinutes))+
 
 <img width="661" height="687" alt="cum fr" src="https://github.com/user-attachments/assets/8485cb03-454c-4eaf-95a7-7e98e5f51b3d" />
 
+
 This plot gives a overview how frequent the device is used. It revealed that only a half of the recorded usage showed that the respondant wears it whole day (24 hours). Around one-fourth of the them wear less than 16 hours. It is uncertain whether this is due to "they do not wear them at sleep".
 ```
 dailyActivity <- dailyActivity %>% 
