@@ -146,7 +146,7 @@ SleepSessionTime <-
 
 It turns out that some people have a habit of taking a nap, which may need to switch to calculate sleeping per day instead of per session, and there seems to be inaccurate measurement, such as for ```Id``` 2022484408 and 7007744171, their mean sleeping time is below 3 hours, the same goes for 1644430081 and 1844505072, having exceptional high sleeping hours, which does not seem to accurate measurement. I shall discard them when I have to use this data.
 
-On the ```weightLogInfo``` table, there are serveral duplicates for some people, because they have multiple measurement across the period of time. I will pick the most recent as reference. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
+On the ```weightLogInfo``` table, there are several duplicates for some people, because they have multiple measurement across the period of time. I will pick the most recent as reference. Also, since almost all the columns inside can be concluded into BMI. By rewriting the code used before to change the format with some tweaks, a newly cleaned data frame is created.
 
 ```
 ## Store in a new data frame
