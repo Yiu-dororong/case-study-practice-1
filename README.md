@@ -188,10 +188,15 @@ geom_point(mapping = aes(x=TotalSteps, y=TotalDistance))
 ```
 <img width="661" height="682" alt="totalsteps vs totaldist" src="https://github.com/user-attachments/assets/6e73f8a3-1085-4d6d-81f0-6747b5333c8d" />
 
-And by a pie chart, we see that higher intensity does not mean making up fewer proportion.
+And by a pie chart, we see that higher intensity does not mean making up fewer proportion and begin to create a new master list so that the analysis can be done easier.
 ```
 ## Need to use one of the function in scales
 library('scales')
+
+## Create a new master list and further refine the data
+MasterList <- dailyActivity %>% 
+ group_by(Id) %>% 
+ summarise(AvgSteps=mean(TotalSteps),NewTotalDistance=sum(TotalDistance), TotalVeryActiveDistance = sum(VeryActiveDistance), TotalModeratelyActiveDistance = sum(ModeratelyActiveDistance), TotalLightActiveDistance = sum(LightActiveDistance), TotalCalories=sum(Calories) )
 
 ## Preparation for graphing
 distance_intensity <- data_frame(
@@ -232,13 +237,8 @@ ggplot(data = MasterList,aes(x=NewTotalDistance, y=TotalCalories)) +
 <img width="661" height="687" alt="smooth" src="https://github.com/user-attachments/assets/059edf4d-d58b-4c13-91c0-320a3a2713e2" />
 
 
- Next, I moved on to find if there is any relationship between BMI and daily distance. Since they are data from two different sheets, I have to merge them first by creating a new sheet called ```MasterList```. I also classify respondants' healthiness based on BMI, depsite being considered as a outdated and inaccurate measure. Yet, no clear correlation is found. 
- ```
-## Create a new master list and further refine the data
-MasterList <- dailyActivity %>% 
- group_by(Id) %>% 
- summarise(AvgSteps=mean(TotalSteps),NewTotalDistance=sum(TotalDistance), TotalVeryActiveDistance = sum(VeryActiveDistance), TotalModeratelyActiveDistance = sum(ModeratelyActiveDistance), TotalLightActiveDistance = sum(LightActiveDistance), TotalCalories=sum(Calories) )
-
+ Next, I moved on to find if there is any relationship between BMI and daily distance. Since they are data from two different sheets, I have to merge them with ```MasterList```. I also classify respondants' healthiness based on BMI, depsite being considered as a outdated and inaccurate measure. Yet, no clear correlation is found. 
+```
 ## Combining with BMI 
 MasterList <- left_join(MasterList,BMIInfo)  
     BMIpos <- c(14,22,27,35)
@@ -255,7 +255,7 @@ MasterList <- left_join(MasterList,BMIInfo)
     geom_hline(aes(yintercept = 25))+
     geom_hline(aes(yintercept = 30))+
     annotate('text', x=MidDist, y=BMIpos, label=BMIcategory, size=4)
-  ```
+```
 
 <img width="661" height="687" alt="steps vs bmi" src="https://github.com/user-attachments/assets/7dac3ee7-c01e-45e8-9327-3eb706825805" />
 
@@ -279,7 +279,7 @@ Furthermore, I tried to investigate the correlation sleep time and number of ste
     xlab("Daily Steps")+
     ylab("Daily Sleeping Time (hour)")+
     geom_smooth(method='lm',se = FALSE)
-  ```
+```
 
 <img width="661" height="687" alt="steps vs sleep" src="https://github.com/user-attachments/assets/1f5c5ad6-cdb1-4bf2-bb99-b02cb6c759bc" />
 
