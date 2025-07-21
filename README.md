@@ -106,7 +106,8 @@ and the data types will be adjusted in new columns.
  $ IsManualReport_logical: logi  TRUE FALSE TRUE TRUE TRUE TRUE ...
 ```
 
-Considering there are so many spreadsheets, it would be great to merge them together. Let's treat dailyActivity as the main sheet, and review what columns there are.
+Considering there are so many spreadsheets, it would be great to merge them together. 
+Based on the overview of ```dailyActivity```, let's treat it as the main sheet.
 ```
 > str(dailyActivity)
 'data.frame':	457 obs. of  15 variables:
@@ -130,6 +131,22 @@ Some information, such ```TotalSteps``` and ```Calories``` are already included,
 The only extra information are intensity, heartrate, METs, sleeping time and weight log.
 
 However, after some research, Fitbit use heartrate and METs to create some high level data, such as intensity and classification of active minutes, I will come back to these data if needed.
+The following table concludes whether to use the sheet or not. Of course, there may be more detail to explore in a specific sheet, such as ```minuteSleep``` can tell the exact time steps happens. I may extract this level detail if needed.
+
+| Sheet | Is it concluded in other sheet? |
+| --- | --- |
+| dailyActivity | No |
+| heartrate_seconds | Yes |
+| hourlyCalories | Yes |
+| hourlyIntensities | Yes |
+| hourlySteps | No |
+| minuteCaloriesNarrow | Yes |
+| minuteIntensitiesNarrow | Yes |
+| minuteMETsNarrow | Yes |
+| minuteSleep | No |
+| minuteStepsNarrow | Yes |
+| weightLogInfo | No |
+
 
 Now, lets organise the sheets about sleeping time and weight log.
 For the sleeping time one, since it is in a long format that check whether the user is sleeping in every minute, so I run this code to find more metadata
