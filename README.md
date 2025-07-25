@@ -256,7 +256,7 @@ ggplot(data = MasterList,aes(x=NewTotalDistance, y=TotalCalories)) +
 <img width="661" height="687" alt="smooth" src="https://github.com/user-attachments/assets/059edf4d-d58b-4c13-91c0-320a3a2713e2" />
 
 
- Next, I moved on to find if there is any relationship between BMI and daily distance. Since they are data from two different sheets, I have to merge them with ```MasterList```. I also classify respondants' healthiness based on BMI, depsite being considered as a outdated and inaccurate measure. Yet, no clear correlation is found. 
+ Next, I moved on to find if there is any relationship between BMI and daily distance. Since they are data from two different sheets, I have to merge them with ```MasterList```. I also classify respondants' healthiness based on BMI, depsite being considered as a outdated and inaccurate measure. 
 ```
 ## Combining with BMI 
 MasterList <- left_join(MasterList,BMIInfo)  
@@ -277,6 +277,12 @@ MasterList <- left_join(MasterList,BMIInfo)
 ```
 
 <img width="661" height="687" alt="steps vs bmi" src="https://github.com/user-attachments/assets/7dac3ee7-c01e-45e8-9327-3eb706825805" />
+
+The graph does not give apparent correclation despite its covariance being far from 0. One may conclude this is negative relationship among them.
+```
+> cov(MasterList$AvgSteps, MasterList$BMI,use = "complete.obs", method = "pearson")
+[1] -17072.91
+```
 
 
 Furthermore, I tried to investigate the correlation sleep time and number of steps. Keeping in mind that some outliers mentioned before should be remove.
